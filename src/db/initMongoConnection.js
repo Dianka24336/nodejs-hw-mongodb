@@ -19,4 +19,3 @@ export const initMongoConnection = async () => {
     }
   };
 
-//   mongodb+srv://dianka24336:o6ZBpr3jIqsEYKAF@cluster0.npdu3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
