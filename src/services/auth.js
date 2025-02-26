@@ -87,7 +87,7 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
   });
 };
 
-export const requestResetToken = async (email) => {
+export const sendResetToken = async (email) => {
   const user = await UsersCollection.findOne({ email });
   if (!user) {
     throw createHttpError(404, 'User not found');
@@ -99,7 +99,7 @@ export const requestResetToken = async (email) => {
     },
     getEnvVar('JWT_SECRET'),
     {
-      expiresIn: '15m',
+      expiresIn: '5m',
     },
   );
   const resetPasswordTemplatePath = path.join(
@@ -115,14 +115,19 @@ export const requestResetToken = async (email) => {
     name: user.name,
     link: `${getEnvVar('APP_DOMAIN')}/reset-password?token=${resetToken}`,
   });
-
-
+try {
   await sendEmail({
     from: getEnvVar(SMTP.SMTP_FROM),
     to: email,
     subject: 'Reset your password',
     html,
   });
+} catch (err) {
+  console.error(err);
+  throw createHttpError(500, 'Failed to send the email, please try again later.');
+}
+
+  
 };
 
 export const resetPassword = async (payload) => {
@@ -131,7 +136,7 @@ export const resetPassword = async (payload) => {
   try {
     entries = jwt.verify(payload.token, getEnvVar('JWT_SECRET'));
   } catch (err) {
-    if (err instanceof Error) throw createHttpError(401, err.message);
+    if (err instanceof Error) throw createHttpError(401, 'Token is expired or invalid.');
     throw err;
   }
 
