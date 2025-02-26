@@ -10,24 +10,15 @@ export const getAllContacts = async ({
   sortBy = '_id',
   filter = {},
 }) => {
-  
   const limit = perPage;
   const skip = (page - 1) * perPage;
-  console.log('Get all contacts called with:', {
-    userId,
-    page,
-    perPage,
-    sortOrder,
-    sortBy,
-    filter,
-  });
-
+  
   const contactsQuery = ContactsCollection.find({ userId });
 
   if (filter.isFavourite !== undefined) {
     contactsQuery.where('isFavourite').equals(filter.isFavourite);
   }
-  if (filter.contactType ) {
+  if (filter.contactType) {
     contactsQuery.where('contactType').equals(filter.contactType);
   }
 
@@ -40,11 +31,7 @@ export const getAllContacts = async ({
       .exec(),
   ]);
 
-  const paginationData = calculatePaginationData(
-    page,
-    perPage,
-    contactsCount,
-  );
+  const paginationData = calculatePaginationData(page, perPage, contactsCount);
 
   return { data: contacts, ...paginationData };
 };
@@ -55,10 +42,8 @@ export const getContactById = async (userId, contactId) => {
 };
 
 export const createContact = async (payload, userId) => {
-  console.log('User ID:', userId);
-  
   const contact = await ContactsCollection.create({ ...payload, userId });
-  console.log('New contact created:', contact);
+
   return contact;
 };
 
