@@ -35,10 +35,6 @@ requestBody:
             description: "To which type the contact belongs"
             type: string
             enum: ['work', 'home', 'personal']   
-          UserId:
-            description: "Contact's user id"
-            type: string
-            example: 67be339f7b813247759448d0
           photo:
             description: "Contact's photo"
             type: string

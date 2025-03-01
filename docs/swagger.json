@@ -14,7 +14,7 @@
       "url": "http://localhost:3000"
     },
     {
-      "url": "https://example.com/api/v1"
+      "url": "https://nodejs-hw-swagger-ycf9.onrender.com"
     }
   ],
   "tags": [
@@ -225,11 +225,6 @@
                       "home",
                       "personal"
                     ]
-                  },
-                  "UserId": {
-                    "description": "Contact's user id",
-                    "type": "string",
-                    "example": "67be339f7b813247759448d0"
                   },
                   "photo": {
                     "description": "Contact's photo",
@@ -482,9 +477,6 @@
           "204": {
             "description": "No Content",
             "content": {}
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
           },
           "401": {
             "$ref": "#/components/responses/401"
